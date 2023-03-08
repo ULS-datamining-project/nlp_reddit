@@ -15,6 +15,11 @@ from pathlib import Path
 DATA_DIRECTORY = "data/"
 Path(DATA_DIRECTORY).mkdir(parents=True, exist_ok=True)
 
+POST_TIME_PERIOD = "year"
+
+# Number of posts per subreddit to pull
+N_TITLES = 1000
+
 #Obtained from praw.ini file in working directory
 reddit = praw.Reddit("uls-healthyeating", check_for_async=False)
 
@@ -35,17 +40,17 @@ top_dict = {"subreddit" : [],
             "created_utc" : []
             }
 
-
-N_TITLES = 1000
+# Cycle over each of the subreddits, grab posts and append it to the
+# global dictionary
 
 for index,subreddit in enumerate(food_multireddit.subreddits):
     subreddit_name = subreddit.display_name
     
-    #Weird codes are to get text in red
+    #Subreddits to appear in red
     print("\n[", time.datetime.now(), "]", f"{Fore.RED}****{subreddit_name}****{Style.RESET_ALL}")
     print(f"Subreddit number: {index}")
     
-    subreddit_data = subreddit.top(limit=N_TITLES, time_filter="year")
+    subreddit_data = subreddit.top(limit=N_TITLES, time_filter=POST_TIME_PERIOD)
     
     for post in subreddit_data:
         
@@ -62,6 +67,7 @@ for index,subreddit in enumerate(food_multireddit.subreddits):
         top_dict["permalink"].append(post.permalink)
         top_dict["created_utc"].append(post.created_utc)
     
+# Combine dictionary into one large dataframe    
 top_df = pd.DataFrame(top_dict)
 
 top_df.to_csv(DATA_DIRECTORY + "reddit_data.csv", index = False)
