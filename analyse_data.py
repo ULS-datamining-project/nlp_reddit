@@ -16,4 +16,3 @@ subreddit_health = pd.read_csv("data/subreddit_health.csv")
 #Merge assessment of subreddit health with subreddit data
 reddit_data = raw_data.merge(subreddit_health, on = "subreddit")
 
-

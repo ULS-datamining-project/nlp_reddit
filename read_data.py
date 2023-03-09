@@ -70,4 +70,4 @@ for index,subreddit in enumerate(food_multireddit.subreddits):
 # Combine dictionary into one large dataframe    
 top_df = pd.DataFrame(top_dict)
 
-top_df.to_csv(DATA_DIRECTORY + "reddit_data.csv", index = False)
+top_df.to_csv(DATA_DIRECTORY + "raw_reddit_data.csv", index = False)
