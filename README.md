@@ -1,6 +1,6 @@
 # Healthy Food Trends on Reddit (uls-reddit)
 
-![](icon.png)
+![](img/icon.png)
 
 ## Goal
 
