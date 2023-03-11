@@ -14,12 +14,6 @@ from statsmodels.formula.api import logit
 
 sentiment_data = pd.read_csv("data/reddit_data_sentiment.csv")
 
-with pd.option_context('display.max_rows', 20,
-                       'display.max_columns', None,
-                       'display.precision', 3,
-                       ):
-    print(sentiment_data)
-
 def sentiment2int(sentiment):
     if sentiment == "NEGATIVE":
         return(False)
@@ -58,7 +52,6 @@ any(model.predict(X_train))
 
 #Oh, well that's kind of disappointing. If you declare everything as unhealthy then the model works well. Some model, huh?
 
-model.predict(X_test)
 any(model.predict(X_test))
 
 
