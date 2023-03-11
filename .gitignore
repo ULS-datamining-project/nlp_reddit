@@ -1,5 +1,5 @@
 .spyproject/
+.ipynb_checkpoints/
 
 praw.ini
-*.csv
 *.xlsx
