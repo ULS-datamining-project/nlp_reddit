@@ -11,11 +11,11 @@ import nltk
 nltk.download('stopwords')
 
 # Open the CSV file for reading
-with open('dts.csv', 'r', encoding='utf-8') as input_file:
-    with open('ids.csv','r',encoding='utf-8') as mapping_file :
+with open('data/raw_reddit_data.csv', 'r', encoding='utf-8') as input_file:
+    with open('data/subreddit_health.csv','r',encoding='utf-8') as mapping_file :
 
-        reader_map=pd.read_csv('idss.csv',delimiter=';')
-        reader=pd.read_csv('dt.csv',delimiter=';')
+        reader_map=pd.read_csv('data/subreddit_health.csv',delimiter=';')
+        reader=pd.read_csv('data/raw_reddit_data.csv',delimiter=';')
         print(reader_map)
         result = pd.merge(reader, reader_map, on='Subreddits')
         print(result.tail(n=10))
