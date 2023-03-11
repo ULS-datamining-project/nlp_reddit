@@ -11,7 +11,7 @@ import nltk
 nltk.download('stopwords')
 
 # Open the CSV file for reading
-with open('dt.csv', 'r', encoding='utf-8') as input_file:
+with open('data/raw_reddit_data.csv', 'r', encoding='utf-8') as input_file:
 
     # Create a CSV reader object
     reader = csv.reader(input_file, delimiter=',')
@@ -26,7 +26,7 @@ with open('dt.csv', 'r', encoding='utf-8') as input_file:
     for row in reader:
 
         # Remove links and punctuation marks
-        text = re.sub(r'http\S+', '', row[0])
+        text = re.sub(r'http\S+', '', row[1])
         text = re.sub(r'[^\w\s]', '', text)
 
         # Tokenize the text using word_tokenize
