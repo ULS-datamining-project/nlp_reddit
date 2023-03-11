@@ -11,13 +11,14 @@ import nltk
 nltk.download('stopwords')
 
 # Open the CSV file for reading
-with open('data/raw_reddit_data.csv', 'r', encoding='utf-8') as input_file:
+with open('data/reddit_data_sentiment.csv', 'r', encoding='utf-8') as input_file:
 
     # Create a CSV reader object
     reader = csv.reader(input_file, delimiter=',')
 
     # Create an empty list to hold the words
-    words = []
+    words_nature1 = []
+    words_nature2 = []
 
     # Define stopwords to remove
     stop_words = set(stopwords.words('english'))
@@ -35,42 +36,60 @@ with open('data/raw_reddit_data.csv', 'r', encoding='utf-8') as input_file:
         # Remove stopwords and demonstrative words
         filtered_tokens = [token.lower() for token in tokens if token.lower() not in stop_words and token.lower() not in ['this', 'that', 'these', 'those']]
 
+          # Determine the nature of the row
+        label = row[13]
+
+        # Add the filtered tokens to the appropriate list based on the nature
+        if label == 'POSITIVE':
+            words_nature1.extend(filtered_tokens)
+        elif label == 'NEGATIVE':
+            words_nature2.extend(filtered_tokens)
+      
         # Add the filtered tokens to the words list
-        words.extend(filtered_tokens)
+        words_nature1.extend(filtered_tokens)
+        words_nature2.extend(filtered_tokens)
+# Create frequency distributions for each nature
+freq_dist_nature1 = FreqDist(words_nature1)
+freq_dist_nature2 = FreqDist(words_nature2)
 
-# Create a frequency distribution of the words
-freq_dist = FreqDist(words)
 
-# Get the 25 most frequent words and least frequent words
-most_frequent_words = freq_dist.most_common(25)
-least_frequent_words = freq_dist.most_common()[-25:]
+# Get the 25 most frequent words and least frequent words for each nature
+most_frequent_words_nature1 = freq_dist_nature1.most_common(25)
+most_frequent_words_nature2 = freq_dist_nature2.most_common(25)
 
-# Create a bar graph for the most frequent words
+
+# Create a bar graph for the most frequent words for each nature
 plt.figure(figsize=(10,5))
-plt.bar([word[0] for word in most_frequent_words], [word[1] for word in most_frequent_words])
+plt.bar([word[0] for word in most_frequent_words_nature1], [word[1] for word in most_frequent_words_nature1])
 plt.xticks(rotation=90)
-plt.title("Most frequent words")
+plt.title("Most frequent words for POSITIVE")
 plt.xlabel("Words")
 plt.ylabel("Frequency")
 plt.tight_layout()
-plt.savefig("bar_graph_most_frequent.png")
+plt.savefig("bar_graph_most_frequent_POSITIVE.png")
 
-# Create a bar graph for the least frequent words
 plt.figure(figsize=(10,5))
-plt.bar([word[0] for word in least_frequent_words], [word[1] for word in least_frequent_words])
+plt.bar([word[0] for word in most_frequent_words_nature2], [word[1] for word in most_frequent_words_nature2])
 plt.xticks(rotation=90)
-plt.title("Least frequent words")
+plt.title("Most frequent words for NEGATIVE")
 plt.xlabel("Words")
 plt.ylabel("Frequency")
 plt.tight_layout()
-plt.savefig("bar_graph_least_frequent.png")
+plt.savefig("bar_graph_most_frequent_NEGATIVE.png")
 
 # Generate a word cloud
-wordcloud = WordCloud(width=800, height=800, background_color='white').generate_from_frequencies(freq_dist)
-
+wordcloud = WordCloud(width=800, height=800, background_color='white').generate_from_frequencies(freq_dist_nature1)
+wordcloud2 = WordCloud(width=800, height=800, background_color='white').generate_from_frequencies(freq_dist_nature2) 
 # Plot the word cloud
 plt.figure(figsize=(8, 8), facecolor=None)
 plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad=0)
+
+# Save the word cloud as a PNG file
+plt.savefig("wordcloud2.png")
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(wordcloud2)
 plt.axis("off")
 plt.tight_layout(pad=0)
 
