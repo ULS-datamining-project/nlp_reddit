@@ -7,24 +7,25 @@ Created on Thu Mar  9 10:22:57 2023
 
 from transformers import pipeline
 import pandas as pd
+import datetime as time
 
-classifier = pipeline("sentiment-analysis", "distilbert-base-uncased-finetuned-sst-2-english")
+# We're using sentiment analysis to classify post titles so that we can use that to help us to predict posts as healthy or not
+
+classifier = pipeline("sentiment-analysis",
+                      "distilbert-base-uncased-finetuned-sst-2-english")
 
 raw_data = pd.read_csv("data/raw_reddit_data.csv")
 subreddit_health = pd.read_csv("data/subreddit_health.csv")
 
-#Merge assessment of subreddit health with subreddit data
-reddit_data = raw_data.merge(subreddit_health, on = "subreddit")
+# Merge assessment of subreddit health with subreddit data
+reddit_data = raw_data.merge(subreddit_health, on="subreddit")
 
-# Run sentiment analysis on each    
-
-#reddit_head = reddit_data.copy().loc[0:5,]
-#reddit_head.loc[:,('label', 'score')] = reddit_head.title.apply(classifier).explode().apply(pd.Series)
-import datetime as time
+# Run sentiment analysis on each element
 
 print(time.datetime.now())
-reddit_data.loc[:,('label', 'score')] = reddit_data.title.apply(classifier).explode().apply(pd.Series)
+reddit_data.loc[:, ('label', 'score')] = reddit_data.title.apply(
+    classifier).explode().apply(pd.Series)
 print(time.datetime.now())
-reddit_data.rename(columns = {"label" : "sentiment_label", "score" : "sentiment_score"})
+#reddit_data.rename(columns = {"label" : "sentiment_label", "score" : "sentiment_score"})
 
-reddit_data.to_csv("data/reddit_data_sentiment.csv", index = False)
+reddit_data.to_csv("data/reddit_data_sentiment.csv", index=False)
