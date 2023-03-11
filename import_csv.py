@@ -11,7 +11,7 @@ import nltk
 nltk.download('stopwords')
 
 # Open the CSV file for reading
-with open('idss.csv', 'r', encoding='utf-8') as ids_file:
+with open('data\subreddit_health.csv', 'r', encoding='utf-8') as ids_file:
     # Create a CSV reader object
     ids_reader = csv.reader(ids_file)
     # Create three empty lists to hold the IDs for each subset
@@ -46,7 +46,7 @@ def preprocess_text(text):
 # Define a function to generate a word cloud and a bar chart for a given subset
 def generate_visualizations(subset_name, ids):
     # Open the CSV file for reading
-    with open('dt.csv', 'r', encoding='utf-8') as input_file:
+    with open('data/raw_reddit_data.csv', 'r', encoding='utf-8') as input_file:
         # Create a CSV reader object
         reader = csv.reader(input_file)
         # Create an empty list to hold the words
