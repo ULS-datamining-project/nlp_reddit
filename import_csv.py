@@ -11,7 +11,7 @@ import nltk
 nltk.download('stopwords')
 
 # Open the CSV file for reading
-with open('data\subreddit_health.csv', 'r', encoding='utf-8') as ids_file:
+with open('data/subreddit_health.csv', 'r', encoding='utf-8') as ids_file:
     # Create a CSV reader object
     ids_reader = csv.reader(ids_file)
     # Create three empty lists to hold the IDs for each subset
