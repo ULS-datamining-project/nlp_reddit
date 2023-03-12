@@ -98,3 +98,9 @@ plt.savefig("wordcloud.png")
 
 # Show the plots
 plt.show()
+## We notice that there are really close similarities between the most frequent words in positive and negative posts for starters
+## chicken is the most frequently used words in both sets of data and most of the words that appear in the charts are the same 
+## It is surprising that rice, soup and salad appear in the negative subset and fried to appear in the positive subset this shows
+## that other than the nature of our analysis food terms are hard to assign to a category different types of food can be healthy 
+## just as they can be unhealthy and positive and negative sentiment towards food is highly subjective as they're not chosen by 
+## their value rather mostly by taste.
