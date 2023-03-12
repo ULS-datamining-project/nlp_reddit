@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 # Download the stopwords corpus
 import nltk
 nltk.download('stopwords')
+nltk.download('punkt')
 
 # Open the CSV file for reading
 with open('data/reddit_data_sentiment.csv', 'r', encoding='utf-8') as input_file:
